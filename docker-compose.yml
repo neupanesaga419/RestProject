@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/restproject
+    image: rest_image
+    ports:
+      - 8000:8000
+    container_name: rest_web_container
+    environment:
+      - POSTGRED_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - new_db
+    
+
+    command: python manage.py runserver 0.0.0.0:8000
+  
+  # mysql_db:
+  #   image: mysql
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD='my-secret-pw'
+  #     - MYSQL_DATABASE='django-app-db'
+  #     - MYSQL_ALLOW_EMPTY_PASSWORD='true'
+  #   volumes:
+  #     - ./data/mysql/dbb:/var/lib/mysql
+
+  new_db:
+    image: postgres:latest
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    
+    container_name: pg_db1

@@ -1,0 +1,5 @@
+myenv/
+data/
+.env
+myapp/__pycache__/
+mysqlproj/__pycache__/
